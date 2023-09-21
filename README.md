@@ -67,5 +67,21 @@ terraform show (para ver tu nueva infraestructura)
 terraform destroy (para derribar tu infraestructura)
 
 ### Output
-**Your words here**
+Etiquetas y Organización:
+Todas las máquinas virtuales están etiquetadas con el nombre del proyecto.
+Se utilizan etiquetas de máquinas virtuales para organizar la arquitectura IaaS.
+Seguridad de Azure:
+Se administran grupos de seguridad de red según las mejores prácticas de seguridad de Azure.
+Se incluye un grupo de seguridad de red en la plantilla Terraform para restringir el acceso desde fuera de la VNet.
+El grupo de seguridad de red niega explícitamente el tráfico entrante desde Internet.
+Se definen, aplican y validan políticas de Azure, y se muestra una captura de pantalla o resultado de az policy assignment list.
+Infraestructura como Código (IaC):
+La infraestructura es reutilizable y aprovecha variables de Terraform.
+Se utilizan bucles de Terraform, como el uso de la característica 'count' en el recurso azurerm_linux_virtual_machine.
+Se utilizan herramientas de automatización como Packer y Terraform.
+Las plantillas se organizan en una carpeta con nombres específicos (main.tf, vars.tf, y una plantilla de Packer en formato .json).
+Herramientas de Implementación:
+Se utiliza Terraform para crear recursos de Azure.
+Se utiliza Packer para crear servicios IaaS de Azure, y las máquinas virtuales hacen referencia a las imágenes generadas por la plantilla Packer.
+En resumen, el proyecto se adhiere a las mejores prácticas de infraestructura como código y seguridad en Azure, aprovechando herramientas de automatización y proporcionando documentación clara para su ejecución y personalización.
 
