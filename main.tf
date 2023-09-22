@@ -36,10 +36,25 @@ resource "azurerm_subnet_network_security_group_association" "internal_associati
   subnet_id                 = azurerm_subnet.internal.id
   network_security_group_id = azurerm_network_security_group.main.id
 }
+
+# Deny incoming network traffic from the Internet to the specified network security group.
+resource "azurerm_network_security_rule" "deny_internet" {
+  name                        = "deny-internet"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "Internet"
+  destination_address_prefix  = "10.0.2.0/24"  
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.main.name
+}
 # Allow virtual machines in a subnet to access
 resource "azurerm_network_security_rule" "allow_internal" {
   name                        = "allow-internal"
-  priority                    = 100
+  priority                    = 101
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
@@ -50,21 +65,35 @@ resource "azurerm_network_security_rule" "allow_internal" {
   resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
-
-# Deny incoming network traffic from the Internet to the specified network security group.
-resource "azurerm_network_security_rule" "deny_internet" {
-  name                        = "deny-internet"
-  priority                    = 200
-  direction                   = "Inbound"
-  access                      = "Deny"
+# Allow the traffic within the same virtual network
+resource "azurerm_network_security_rule" "allow_internal-out" {
+  name                        = "allow-internal-out"
+  priority                    = 102
+  direction                   = "Outbound"
+  access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "Internet"
-  destination_address_prefix  = "*"  
+  source_address_prefix       = "10.0.2.0/24"  
+  destination_address_prefix  = "10.0.2.0/24"  
   resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
+# Allow HTTP traffic from Load Balancer to VMs
+resource "azurerm_network_security_rule" "allow_http" {
+  name                        = "allow-http-in"
+  priority                    = 103
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "AzureLoadBalancer"
+  destination_address_prefix  = "10.0.2.0/24" 
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.main.name 
+}
+
 
 # Network interface
 resource "azurerm_network_interface" "interface" {
@@ -130,18 +159,24 @@ resource "azurerm_virtual_machine" "web-vm" {
   vm_size               = "Standard_DS1_v2"
   availability_set_id   = azurerm_availability_set.availability-set.id
 
-  # source_image_reference {
-  #   publisher = "Canonical"
-  #   offer     = "UbuntuServer"
-  #   sku       = "18.04-LTS"
-  #   version   = "latest"
-  # }
+  #  source_image_reference {
+  #    publisher = "Canonical"
+  #    offer     = "UbuntuServer"
+  #    sku       = "18.04-LTS"
+  #    version   = "latest"
+  #  }
 
-  storage_os_disk {
+    storage_os_disk {
     name              = "osdisk"
     caching           = "ReadWrite"
-    create_option = "FromImage"
+    create_option     = "FromImage"
     # storage_account_type = "Standard_LRS"
+  }
+
+  tags = {
+    project-name = "${var.prefix}"
+    "Dept": "Udacity",
+    "Status": "Normal"
   }
 }
 

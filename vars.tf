@@ -17,6 +17,7 @@ variable "password" {
 
 variable "virtual-machine" {
   description = "Number of the multiple virtual machine"
+  default = 2
    
 }
 

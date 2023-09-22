@@ -1,13 +1,13 @@
 # Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
 
-### Introducción
+### Introduction
 En este proyecto, desarrollarás una plantilla de Packer y una plantilla de Terraform con el propósito de implementar un servidor web escalable y adaptable en Microsoft Azure. La finalidad principal de este proyecto es simplificar el proceso de creación de máquinas virtuales personalizadas en Azure utilizando las herramientas Packer y Terraform. Esto habilita a los usuarios para generar imágenes personalizadas con Packer y posteriormente implementar instancias de máquinas virtuales mediante Terraform.
 
-### Comenzando
+### Getting Started
 1. Clona este repositorio a tu máquina local utilizando el siguiente comando:
 git clone https://github.com/udacity/nd082-Azure-Cloud-DevOps-Starter-Code.git
 
-2. Intala y crea las dependencias necesarias para lograr tu entorno de desarrollo. Las mismas se detallan en la sección de "Dependencias"
+2. Intala y crea las dependencias necesarias para lograr tu entorno de desarrollo. Las mimas se detallan en la sección de "Dependencias"
 
 3. Una vez que hayas clonado el repositorio y tengas todas las herramientas necesarias instaladas, puedes comenzar a crear tu infraestructura como código.
 
@@ -15,14 +15,14 @@ La creación de infraestructura como código implica definir y gestionar tu infr
 
 Sigue las instrucciones en la sección "Instructions" para obtener información detallada sobre cómo crear y gestionar tu infraestructura en Azure con estas herramientas.
 
-### Dependencias
+### Dependencies
  Antes de comenzar, asegúrate de tener instalados los siguientes componentes en tu entorno de desarrollo:
 1. Crear [Azure Account](https://portal.azure.com) 
 2. Instalar [Azure command line interface](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 3. Instalar [Packer](https://www.packer.io/downloads)
 4. Instalar [Terraform](https://www.terraform.io/downloads.html)
 
-### Instrucciones
+### Instructions
 
 Pasos principales
 El proyecto constará de los siguientes pasos principales:
@@ -66,22 +66,6 @@ terraform apply (para aplicar tu plan y desplegar tu infraestructura)
 terraform show (para ver tu nueva infraestructura)
 terraform destroy (para derribar tu infraestructura)
 
-### Salida
-Etiquetas y Organización:
-Todas las máquinas virtuales están etiquetadas con el nombre del proyecto.
-Se utilizan etiquetas de máquinas virtuales para organizar la arquitectura IaaS.
-Seguridad de Azure:
-Se administran grupos de seguridad de red según las mejores prácticas de seguridad de Azure.
-Se incluye un grupo de seguridad de red en la plantilla Terraform para restringir el acceso desde afuera.
-El grupo de seguridad de red niega explícitamente el tráfico entrante desde Internet.
-Se definen, aplican y validan políticas de Azure.
-Infraestructura como Código (IaC):
-La infraestructura es reutilizable y aprovecha variables de Terraform.
-Se utilizan bucles de Terraform.
-Se utilizan herramientas de automatización como Packer y Terraform.
-Las plantillas se organizan en una carpeta con nombres específicos (main.tf, vars.tf, y una plantilla de Packer en formato .json - server.json).
-Herramientas de Implementación:
-Se utiliza Terraform para crear recursos de Azure.
-Se utiliza Packer para crear servicios IaaS de Azure, y las máquinas virtuales hacen referencia a las imágenes generadas por la plantilla Packer.
-En resumen, el proyecto se adhiere a las mejores prácticas de infraestructura como código y seguridad en Azure, aprovechando herramientas de automatización y proporcionando documentación clara para su ejecución y personalización.
+### Output
+**Your words here**
 
