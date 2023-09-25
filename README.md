@@ -1,71 +1,115 @@
-# Azure Infrastructure Operations Project: Deploying a scalable IaaS web server in Azure
+# Azure Infrastructure Operations Project: Deploying a Scalable IaaS Web Server in Azure
 
-### Introduction
-En este proyecto, desarrollarás una plantilla de Packer y una plantilla de Terraform con el propósito de implementar un servidor web escalable y adaptable en Microsoft Azure. La finalidad principal de este proyecto es simplificar el proceso de creación de máquinas virtuales personalizadas en Azure utilizando las herramientas Packer y Terraform. Esto habilita a los usuarios para generar imágenes personalizadas con Packer y posteriormente implementar instancias de máquinas virtuales mediante Terraform.
+# Introduction
+In this project, you will develop a Packer template and a Terraform template with the purpose of deploying a scalable and adaptable web server in Microsoft Azure. The primary goal of this project is to simplify the process of creating custom virtual machines in Azure using Packer and Terraform tools. This enables users to generate custom images with Packer and subsequently deploy virtual machine instances using Terraform.
 
-### Getting Started
-1. Clona este repositorio a tu máquina local utilizando el siguiente comando:
+# Getting Started
+# Azure Infrastructure Operations Project: Deploying a Scalable IaaS Web Server in Azure
+
+## Introduction
+In this project, you will develop a Packer template and a Terraform template with the purpose of deploying a scalable and adaptable web server in Microsoft Azure. The primary goal of this project is to simplify the process of creating custom virtual machines in Azure using Packer and Terraform tools. This enables users to generate custom images with Packer and subsequently deploy virtual machine instances using Terraform.
+
+## Getting Started
+1. **Clone this repository**: Begin by cloning this repository to your local machine using the following command:
+
 git clone https://github.com/udacity/nd082-Azure-Cloud-DevOps-Starter-Code.git
 
-2. Intala y crea las dependencias necesarias para lograr tu entorno de desarrollo. Las mimas se detallan en la sección de "Dependencias"
 
-3. Una vez que hayas clonado el repositorio y tengas todas las herramientas necesarias instaladas, puedes comenzar a crear tu infraestructura como código.
+2. **Install Dependencies**: Install and set up the necessary dependencies for your development environment. These dependencies are detailed in the "Dependencies" section below.
 
-La creación de infraestructura como código implica definir y gestionar tu infraestructura de Azure utilizando archivos de configuración en lugar de configuraciones manuales. En este proyecto, utilizamos Packer para crear imágenes personalizadas y Terraform para desplegar instancias de máquinas virtuales basadas en esas imágenes.
+3. **Create Infrastructure as Code**: Once you have cloned the repository and have all the necessary tools installed, you can start creating your infrastructure as code.
 
-Sigue las instrucciones en la sección "Instructions" para obtener información detallada sobre cómo crear y gestionar tu infraestructura en Azure con estas herramientas.
+Infrastructure as code involves defining and managing your Azure infrastructure using configuration files instead of manual configurations. In this project, we use Packer to create custom images and Terraform to deploy virtual machine instances based on those images.
 
-### Dependencies
- Antes de comenzar, asegúrate de tener instalados los siguientes componentes en tu entorno de desarrollo:
-1. Crear [Azure Account](https://portal.azure.com) 
-2. Instalar [Azure command line interface](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
-3. Instalar [Packer](https://www.packer.io/downloads)
-4. Instalar [Terraform](https://www.terraform.io/downloads.html)
+4. **Follow the Instructions**: Follow the instructions in the "Instructions" section for detailed information on how to create and manage your infrastructure in Azure using these tools.
 
-### Instructions
+## Dependencies
+Before you start, make sure you have the following components installed in your development environment:
 
-Pasos principales
-El proyecto constará de los siguientes pasos principales:
+- [Create an Azure Account](https://portal.azure.com)
+- [Install the Azure Command Line Interface](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+- [Install Packer](https://www.packer.io/downloads)
+- [Install Terraform](https://www.terraform.io/downloads.html)
 
-Crear una plantilla de Packer
-Crear una plantilla de Terraform
-Implementación de la infraestructura
+## Instructions
+### Main Steps
+The project consists of the following main steps:
 
-1. Crear una Imagen Personalizada con Packer
-a. Navega al directorio de Packer en tu proyecto
-b. Modifica el archivo server.json según tus necesidades. Asegúrate de configurar las credenciales de Azure y otros parámetros necesarios.
-c. Ejecuta Packer para crear la imagen personalizada
-d. Una vez que la imagen se haya creado con éxito, anota el nombre de la imagen generada.
+#### 1. Deploy a Policy
+Before getting started, create a policy that ensures all indexed resources are tagged for better organization and tracking. This policy will also help in logging when issues occur.
 
-2. Implementar Máquinas Virtuales con Terraform
-a. Navega al directorio de Terraform en tu proyecto
-b. Modifica el archivo vars.tf según tus necesidades. Asegúrate de definir los valores correctos para la imagen de VM y otros recursos de Azure.
-c. Inicializa Terraform para descargar los proveedores y módulos necesarios
-d. Previsualiza los cambios que se realizarán en tu infraestructura
-e. Aplica los cambios para crear las máquinas virtuales y otros recursos en Azure
-f. Confirma los cambios escribiendo "yes" cuando se te solicite.
+- **Create and Apply a Tagging Policy**: Create a policy that ensures all indexed resources in your subscription have tags and deny deployment if they do not. Write a policy definition to deny the creation of resources that do not have tags. Apply the policy definition to the subscription with the name "tagging-policy". Use the following Azure commands:
+  - `az policy definition create --name tagging-policy --rules policy.json` (create a policy definition in Azure Policy)
+  - `az policy assignment create --policy tagging-policy` (used to create a policy assignment in Azure Policy)
+  - `az policy assignment list` (to view the list of policies)
 
-COMANDOS 
+#### 2. Packer Template
+To support application deployment, you'll need to create a custom image that different organizations can use. Follow these steps:
 
-PACKER
+- **Create a Packer Template**:
+  a. Navigate to the Packer directory in your project.
+  b. Modify the `server.json` file according to your needs. Ensure you configure Azure credentials and other necessary parameters.
+  c. Run Packer to create the custom image.
+  d. Note the name of the generated image. Remember to use Ubuntu 18.04-LTS SKU as your base image.
 
-packer build server.json (Este comando le indica a Packer que debe usar el archivo "server.json" como configuración de construcción y comenzará el proceso de creación de la imagen según la configuración que hayas definido en ese archivo)
+#### 3. Deploy Virtual Machines with Terraform
+a. Navigate to the Terraform directory in your project.
+b. Modify the `vars.tf` file according to your needs. Ensure you define the correct values for the VM image and other Azure resources. Allow for customer configuration of the number of virtual machines and deployment at a minimum.
+c. Modify the `main.tf` file:
+   - Create a resource group.
+   - Create a virtual network and a subnet on that virtual network.
+   - Create a network security group.
+   - Create a public IP.
+   - Create a load balancer.
+   - Create a virtual machine.
+d. Initialize Terraform to download the required providers and modules.
+e. Preview the changes that will be made to your infrastructure.
+f. Apply the changes to create virtual machines and other resources in Azure.
+g. Confirm the changes by typing "yes" when prompted.
 
-AZURE
-az login (para loguearse)
-az account show (para comprobar la sesion)
-az policy definition create --name tagging-policy --rules policy.json (crear una definición de política en Azure Policy.)
-az policy assignment create --policy tagging-policy (se utiliza para crear una asignación de política en Azure Policy.)
-az policy assignment list (para ver la lista con las policticas)
+#### 4. Deploying Your Infrastructure
+Make sure to do the following:
+- Run `packer build server.json` (This command instructs Packer to use the "server.json" file as the build configuration and initiates the image creation process based on the configuration you defined in that file).
 
-TERRAFORM
-terraform init (Para empezar)
-terraform plan (para ver los recursos que se crearan)
-terraform plan -out solution.plan
-terraform apply (para aplicar tu plan y desplegar tu infraestructura)
-terraform show (para ver tu nueva infraestructura)
-terraform destroy (para derribar tu infraestructura)
+- For Terraform:
+  - Run `terraform init` (To initialize).
+  - Run `terraform plan` (to see the resources that will be created).
+  - Run `terraform plan -out solution.plan`.
+  - Run `terraform apply` (to apply your plan and deploy your infrastructure).
+  - Run `terraform show` (to view your new infrastructure).
+  - Run `terraform destroy` (to tear down your infrastructure).
 
-### Output
-**Your words here**
+
+## Output
+
+Upon successful implementation, this project will deliver a robust and scalable web server infrastructure in Microsoft Azure, driven by efficient automation and infrastructure as code (IaC) practices. Here's a detailed breakdown of the outcomes and benefits you can expect:
+
+### 1. Scalable Web Server Infrastructure
+   - **Multiple Virtual Machines**: Your Azure infrastructure will include multiple virtual machines, all created from the custom image generated using Packer. These VM instances can be easily scaled up or down to meet your application's demands, ensuring optimal performance and resource utilization.
+
+### 2. Customization and Reusability
+   - **Custom Packer Image**: The Packer template you've created allows you to build a custom virtual machine image tailored to your specific needs. This image is reusable, making it effortless to deploy consistent environments in the future.
+
+### 3. Efficient Azure Resource Management
+   - **Resource Group**: Terraform will create a resource group to organize and manage all the resources related to your infrastructure, ensuring efficient resource management and easy cleanup if necessary.
+
+   - **Virtual Network and Subnet**: A virtual network with a dedicated subnet will be set up to isolate your infrastructure and control network traffic effectively.
+
+   - **Network Security**: Network security groups will enhance the security of your VM instances, allowing you to define inbound and outbound traffic rules.
+
+   - **Public IP and Load Balancer**: The infrastructure will include a public IP and a load balancer, providing high availability and distributing incoming traffic across multiple VM instances for load balancing.
+
+### 4. Azure Policy Enforcement
+   - **Tagging Policy**: By creating and applying the tagging policy, all indexed resources in your subscription will have required tags. This not only ensures better organization and tracking but also enforces consistent tagging practices across your Azure resources.
+
+### 5. Streamlined Operations and Maintenance
+   - **Automation**: The use of Packer and Terraform streamlines the deployment process. You can easily rebuild your infrastructure or make updates without manual intervention, reducing operational overhead.
+
+### 6. Enhanced Infrastructure as Code (IaC)
+   - **Reproducibility**: Your entire infrastructure is defined as code, making it reproducible. You can create identical environments in other Azure regions or subscriptions by applying the same templates.
+
+### 7. Detailed Documentation
+   - **README**: This README provides comprehensive guidance on setting up and managing your infrastructure. It serves as a valuable reference for maintaining your Azure environment effectively.
+
+By following the instructions and best practices outlined in this project, you'll have a scalable, customizable, and well-managed web server infrastructure in Azure, ready to support your applications and services with ease.
 
