@@ -1,11 +1,5 @@
 # Azure Infrastructure Operations Project: Deploying a Scalable IaaS Web Server in Azure
 
-# Introduction
-In this project, you will develop a Packer template and a Terraform template with the purpose of deploying a scalable and adaptable web server in Microsoft Azure. The primary goal of this project is to simplify the process of creating custom virtual machines in Azure using Packer and Terraform tools. This enables users to generate custom images with Packer and subsequently deploy virtual machine instances using Terraform.
-
-# Getting Started
-# Azure Infrastructure Operations Project: Deploying a Scalable IaaS Web Server in Azure
-
 ## Introduction
 In this project, you will develop a Packer template and a Terraform template with the purpose of deploying a scalable and adaptable web server in Microsoft Azure. The primary goal of this project is to simplify the process of creating custom virtual machines in Azure using Packer and Terraform tools. This enables users to generate custom images with Packer and subsequently deploy virtual machine instances using Terraform.
 

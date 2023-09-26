@@ -159,18 +159,17 @@ resource "azurerm_virtual_machine" "web-vm" {
   vm_size               = "Standard_DS1_v2"
   availability_set_id   = azurerm_availability_set.availability-set.id
 
-  #  source_image_reference {
-  #    publisher = "Canonical"
-  #    offer     = "UbuntuServer"
-  #    sku       = "18.04-LTS"
-  #    version   = "latest"
-  #  }
+   source_image_reference {
+      publisher = "Canonical"
+      offer     = "UbuntuServer"
+      sku       = "18.04-LTS"
+      version   = "latest"
+    }
 
     storage_os_disk {
     name              = "osdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    # storage_account_type = "Standard_LRS"
   }
 
   tags = {
