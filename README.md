@@ -49,6 +49,17 @@ To support application deployment, you'll need to create a custom image that dif
 #### 3. Deploy Virtual Machines with Terraform
 a. Navigate to the Terraform directory in your project.
 b. Modify the `vars.tf` file according to your needs. Ensure you define the correct values for the VM image and other Azure resources. Allow for customer configuration of the number of virtual machines and deployment at a minimum.
+Open the `vars.tf` File:
+ Start by opening the `vars.tf` file in a text editor or your development environment. This file is where you'll define the variables used in your Terraform configuration.
+Define necessary variables: 
+Identify the variables required to configure and deploy your infrastructure in Azure. These variables can include items such as the name of a custom Packer image, the number of virtual machines to deploy, locations, VM sizes, and more.
+-variable "variable_name": This defines a variable named "variable_name."
+-description: An optional description that can help collaborators understand the variable's purpose.
+-type: Specifies the variable type, such as "string," "number," "bool," etc.
+-default: You can provide a default value if desired, but it's optional.
+
+After defining these variables, you can use them in your Terraform configuration to make your infrastructure setup more flexible and customizable.
+
 c. Modify the `main.tf` file:
    - Create a resource group.
    - Create a virtual network and a subnet on that virtual network.
