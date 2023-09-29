@@ -1,10 +1,14 @@
 
-variable "prefix" {
+  variable "prefix" {
+  type    = string
+  default = "Azuredevops"
   description = "The prefix used for all resources in this example"
 }
+  
+
 variable "location" {
   description = "The Azure location where all resources in this example should be created"
-  default = "East US"
+  default = "southcentralus"
 }
 variable "username" {
   description = "This is an username"
@@ -20,4 +24,10 @@ variable "virtual-machine" {
   default = 2
    
 }
+
+
+
+
+
+
 
